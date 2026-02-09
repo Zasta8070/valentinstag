@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Ich liebe dich ❤️</title>
+<title>Volim te ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Fonts -->
@@ -12,7 +12,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #ffd1d6;
+  background: linear-gradient(180deg, #ffd1d6, #ffe9ec);
   color: #333;
   text-align: center;
   overflow-x: hidden;
@@ -26,7 +26,7 @@ section {
 
 .hidden { display: none; }
 
-/* Schriftstile */
+/* Schrift */
 .script {
   font-family: 'Great Vibes', cursive;
   font-size: 3.6rem;
@@ -34,7 +34,7 @@ section {
 }
 
 .question {
-  font-size: 2.3rem;
+  font-size: 2.2rem;
   margin-bottom: 35px;
 }
 
@@ -72,7 +72,7 @@ button {
 
 /* Countdown */
 .countdown-wrapper {
-  margin-top: 70px;
+  margin-top: 80px;
 }
 
 .countdown-text {
@@ -85,6 +85,18 @@ button {
   font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
   letter-spacing: 1px;
+}
+
+/* Scroll-Bild */
+.scroll-image {
+  margin-top: 160px;
+}
+
+.scroll-image img {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 /* Galerie */
@@ -119,7 +131,7 @@ button {
 
 <!-- START -->
 <section id="startView">
-  <div class="script">Alles aus Liebe.</div>
+  <div class="script">Ich liebe dich mehr als gestern, aber weniger als morgen. </div>
 
   <div class="question">
     Lari, willst du mein Valentinstagsdate sein?
@@ -136,19 +148,11 @@ button {
     </div>
     <div id="countdown">Lädt…</div>
   </div>
-<!-- SCROLL-BILD -->
-<div style="margin-top:120px;">
-  <img 
-    src="foto4.jpg" 
-    alt="Ein besonderer Moment"
-    style="
-      max-width: 320px;
-      width: 100%;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    "
-  >
-</div>
+
+  <!-- FOTO 4 – NUR BEIM SCROLLEN SICHTBAR -->
+  <div class="scroll-image">
+    <img src="foto4.jpg" alt="Ein besonderer Moment">
+  </div>
 </section>
 
 <!-- NEIN -->
@@ -161,14 +165,13 @@ button {
 
 <!-- JA -->
 <section id="yesView" class="hidden">
-  <div class="script">Alles aus Liebe.</div>
+  <div class="script">Za moju princezu. </div>
 
   <div class="romantic">
 HIER KOMMT DEIN LANGER TEXT.
 
-Schreib ihn so,
-wie du sprichst.
-Ehrlich. Ruhig.
+So, wie du sprichst.
+So, wie du fühlst.
 Ohne Kitsch.
   </div>
 
@@ -178,12 +181,15 @@ Ohne Kitsch.
     <img src="foto3.jpg">
   </div>
 
+  <!-- SPOTIFY -->
   <iframe
     style="border-radius:12px;margin-top:50px"
-    src="https://open.spotify.com/embed/playlist/XXXXXXXX"
-    width="100%" height="380"
+    src="https://open.spotify.com/playlist/3By4rJlCXi8U4yWtDfYF07?si=d2294b4d7e1b45b0&pt=845062580a6f56245cf58cbf1f21873b"
+    width="100%"
+    height="380"
     frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy">
   </iframe>
 
   <div class="buttons">
@@ -222,7 +228,7 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-/* VIEW WECHSEL */
+/* VIEW-WECHSEL */
 function showNo() {
   document.getElementById("startView").classList.add("hidden");
   document.getElementById("noView").classList.remove("hidden");
@@ -260,5 +266,3 @@ function heartRain() {
 
 </body>
 </html>
-
-

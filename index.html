@@ -5,7 +5,8 @@
 <title>Für dich ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Great+Vibes&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -14,6 +15,7 @@ body {
   background: #ffd1d6;
   color: #333;
   text-align: center;
+  overflow-x: hidden;
 }
 
 section {
@@ -22,15 +24,18 @@ section {
   margin: auto;
 }
 
+.hidden { display: none; }
+
+/* Schriftstile */
 .script {
   font-family: 'Great Vibes', cursive;
-  font-size: 3.5rem;
-  margin-bottom: 20px;
+  font-size: 3.6rem;
+  margin-bottom: 25px;
 }
 
 .question {
   font-size: 2.3rem;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 
 .romantic {
@@ -41,6 +46,7 @@ section {
   margin-bottom: 60px;
 }
 
+/* Buttons */
 .buttons {
   display: flex;
   justify-content: center;
@@ -51,7 +57,7 @@ section {
 
 button {
   font-size: 1.1rem;
-  padding: 12px 26px;
+  padding: 12px 28px;
   border: none;
   border-radius: 30px;
   cursor: pointer;
@@ -59,14 +65,29 @@ button {
 
 .yes { background:#ff4d6d; color:white; }
 .no { background:#ccc; }
-.back { background:transparent; border:2px solid #333; }
-
-#countdown {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-top: 25px;
+.back {
+  background: transparent;
+  border: 2px solid #333;
 }
 
+/* Countdown */
+.countdown-wrapper {
+  margin-top: 70px;
+}
+
+.countdown-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+#countdown {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+/* Galerie */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
@@ -79,8 +100,6 @@ button {
   border-radius: 15px;
 }
 
-.hidden { display:none; }
-
 /* Herzen */
 .heart {
   position: fixed;
@@ -91,7 +110,7 @@ button {
 }
 
 @keyframes fall {
-  to { transform: translateY(110vh); opacity:0; }
+  to { transform: translateY(110vh); opacity: 0; }
 }
 </style>
 </head>
@@ -101,14 +120,22 @@ button {
 <!-- START -->
 <section id="startView">
   <div class="script">Für dich</div>
-  <div class="question">Willst du mein Valentinstagsdate sein?</div>
+
+  <div class="question">
+    Willst du mein Valentinstagsdate sein?
+  </div>
 
   <div class="buttons">
     <button class="yes" onclick="showYes()">Ja ❤️</button>
     <button class="no" onclick="showNo()">Nein</button>
   </div>
 
-  <div id="countdown">Lädt…</div>
+  <div class="countdown-wrapper">
+    <div class="countdown-text">
+      Unser nächster Jahrestag
+    </div>
+    <div id="countdown">Lädt…</div>
+  </div>
 </section>
 
 <!-- NEIN -->
@@ -126,9 +153,10 @@ button {
   <div class="romantic">
 HIER KOMMT DEIN LANGER TEXT.
 
-Ehrlich.
+Schreib ihn so,
+wie du sprichst.
+Ehrlich. Ruhig.
 Ohne Kitsch.
-So wie du fühlst.
   </div>
 
   <div class="gallery">
@@ -155,8 +183,7 @@ So wie du fühlst.
 function getNextAnniversary() {
   const now = new Date();
   let year = now.getFullYear();
-  let target = new Date(year, 5, 23, 0, 0, 0); // 23.06
-
+  let target = new Date(year, 5, 23, 0, 0, 0);
   if (now > target) {
     target = new Date(year + 1, 5, 23, 0, 0, 0);
   }
@@ -182,7 +209,7 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-/* VIEW SWITCH */
+/* VIEW WECHSEL */
 function showNo() {
   document.getElementById("startView").classList.add("hidden");
   document.getElementById("noView").classList.remove("hidden");
@@ -205,15 +232,15 @@ function goBack() {
 /* ❤️ HERZREGEN */
 function heartRain() {
   const colors = ["#ff4d6d", "#ffffff"];
-  for (let i=0;i<35;i++) {
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.color=colors[Math.floor(Math.random()*colors.length)];
-    h.style.animationDuration=(2+Math.random())+"s";
+  for (let i = 0; i < 35; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.color = colors[Math.floor(Math.random() * colors.length)];
+    h.style.animationDuration = (2 + Math.random()) + "s";
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),3500);
+    setTimeout(() => h.remove(), 3500);
   }
 }
 </script>

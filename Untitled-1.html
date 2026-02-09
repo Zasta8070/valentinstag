@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Für dich ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #333;
+      text-align: center;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-weight: normal;
+      margin-bottom: 30px;
+    }
+
+    .text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .question {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .yes {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background-color: #ccc;
+    }
+
+    footer {
+      padding: 40px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- START -->
+  <section>
+    <h1>Alles aus Liebe ❤️</h1>
+    <h2>Za moje srce, moju dušu, moje sve </h2>
+  </section>
+
+  <!-- TEXT -->
+  <section>
+    <div class="text">
+      Seitdem du da bist, fühlt sich vieles leichter an.<br>
+      Ich wollte dir etwas schenken, das bleibt.<br><br>
+      Nicht perfekt. Aber ehrlich.<br>
+      Genau wie das, was ich für dich empfinde.
+    </div>
+  </section>
+
+  <!-- FOTOS -->
+  <section>
+    <h2>Dvoje zaljubljenih</h2>
+    <div class="gallery">
+      <img src="foto1.jpg" alt="Foto 1">
+      <img src="foto2.jpg" alt="Foto 2">
+      <img src="foto3.jpg" alt="Foto 3">
+    </div>
+  </section>
+
+  <!-- SPOTIFY -->
+  <section>
+    <h2>Shine bright like a diamond </h2>
+
+    <!-- 🔁 HIER DEIN SPOTIFY-LINK -->
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/playlist/3By4rJlCXi8U4yWtDfYF07?si=d476536c542e46c1&pt=740f18e63f188e867a5f48c64a301e6f"
+      width="100%"
+      height="380"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+
+    <p class="text">
+      Musik, die mich immer an dich erinnert.
+    </p>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section>
+    <h2>Unser Jahrestag ⏳</h2>
+
+    <div id="countdown" style="font-size: 2rem; margin-top: 20px;">
+      Wird geladen...
+    </div>
+
+    <p class="text">
+      Zeit vergeht.<br>
+      Aber das hier zählt.
+    </p>
+  </section>
+
+  <!-- FRAGE -->
+  <section>
+    <div class="question">
+      Willst du mein Valentinstagsdate sein?
+    </div>
+
+    <div class="buttons">
+      <button class="yes" onclick="yesClicked()">Ja ❤️</button>
+      <button class="no" onmouseover="moveButton(this)">Natürlich 😳</button>
+    </div>
+  </section>
+
+  <footer>
+    Za tebe ❤️
+  </footer>
+
+  <script>
+    // ❤️ KLICK AUF "JA"
+    function yesClicked() {
+      document.body.innerHTML = `
+        <section>
+          <h1>❤️</h1>
+          <h2>Dann gehört der Valentinstag uns.</h2>
+          <p class="text">
+            Ich freu mich auf alles, was wir noch erleben.<br>
+            Mit dir.
+          </p>
+        </section>
+      `;
+    }
+
+    // 😳 BUTTON WEICHT AUS
+    function moveButton(btn) {
+      btn.style.position = "absolute";
+      btn.style.left = Math.random() * 80 + "%";
+      btn.style.top = Math.random() * 80 + "%";
+    }
+
+    // ⏳ JAHRESTAG (YYYY-MM-DD) ← HIER ÄNDERN
+    const anniversaryDate = new Date("2025-06-23");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = anniversaryDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "Heute ❤️";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      document.getElementById("countdown").innerHTML =
+        `${days} Tage · ${hours} Stunden · ${minutes} Minuten`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+  </script>
+
+</body>
+</html>

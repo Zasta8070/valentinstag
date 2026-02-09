@@ -24,10 +24,15 @@
       margin: auto;
     }
 
-    /* Romantische Akzente */
     .script {
       font-family: 'Great Vibes', cursive;
       font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 2.3rem;
+      margin-bottom: 30px;
     }
 
     .romantic {
@@ -35,31 +40,23 @@
       font-size: 1.25rem;
       line-height: 1.8;
       white-space: pre-line;
-    }
-
-    .question {
-      font-size: 2.3rem;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
     }
 
     .buttons {
       display: flex;
       justify-content: center;
       gap: 20px;
+      margin-bottom: 30px;
       flex-wrap: wrap;
     }
 
     button {
-      font-size: 1.2rem;
-      padding: 15px 30px;
+      font-size: 1.1rem;
+      padding: 12px 26px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
     }
 
     .yes {
@@ -69,7 +66,30 @@
 
     .no {
       background-color: #ccc;
-      position: relative;
+    }
+
+    .back {
+      background-color: transparent;
+      border: 2px solid #333;
+    }
+
+    #countdown {
+      font-size: 1.8rem;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 40px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     /* Herzen */
@@ -78,7 +98,6 @@
       top: -10px;
       font-size: 20px;
       animation: fall 2.5s linear forwards;
-      color: #ff4d6d;
       pointer-events: none;
     }
 
@@ -93,65 +112,118 @@
 
 <body>
 
-  <!-- SEITE 1: FRAGE -->
-  <section id="start">
-    <div class="script">Für dich</div>
+<section id="start">
+  <div class="script">Für dich</div>
 
-    <div class="question">
-      Willst du mein Valentinstagsdate sein?
+  <div class="question">
+    Willst du mein Valentinstagsdate sein?
+  </div>
+
+  <div class="buttons">
+    <button class="yes" onclick="yesClicked()">Ja ❤️</button>
+    <button class="no" onclick="noClicked()">Nein</button>
+  </div>
+
+  <div id="countdown">Lädt...</div>
+
+  <div id="noImage" style="display:none; margin-top:40px;">
+    <img src="nein.jpg" style="max-width:300px; border-radius:15px;">
+    <div class="buttons" style="margin-top:30px;">
+      <button class="back" onclick="goBack()">Zurück</button>
     </div>
+  </div>
+</section>
 
-    <div class="buttons">
-      <button class="yes" onclick="yesClicked()">Ja ❤️</button>
-      <button class="no" onmouseover="moveButton(this)">Nein 😳</button>
-    </div>
-  </section>
+<script>
+  const startHTML = document.body.innerHTML;
 
-  <script>
-    function moveButton(btn) {
-      btn.style.position = "absolute";
-      btn.style.left = Math.random() * 80 + "%";
-      btn.style.top = Math.random() * 80 + "%";
+  /* COUNTDOWN */
+  const anniversaryDate = new Date("2025-06-23");
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = anniversaryDate - now;
+
+    if (diff <= 0) {
+      document.getElementById("countdown").innerHTML = "Heute ❤️";
+      return;
     }
 
-    function yesClicked() {
-      heartRain();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerHTML =
+      `Noch ${days} Tage bis zu unserem Jahrestag`;
+  }
 
-      setTimeout(() => {
-        document.body.innerHTML = `
-          <section>
-            <div class="script">Für dich</div>
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
 
-            <div class="romantic">
+  /* NEIN */
+  function noClicked() {
+    document.getElementById("noImage").style.display = "block";
+  }
+
+  /* JA */
+  function yesClicked() {
+    heartRain();
+
+    setTimeout(() => {
+      document.body.innerHTML = `
+        <section>
+          <div class="script">Für dich</div>
+
+          <div class="romantic">
 HIER KOMMT DEIN LANGER TEXT.
 
-Schreib ihn genau so, wie du sprichst.
-Mit Pausen.
-Mit Gedanken.
-Mit allem, was du ihr sagen willst.
+Ehrlich.
+Ruhig.
+Ohne Kitsch.
+          </div>
 
-Das hier ist der Moment, der bleibt.
-            </div>
-          </section>
-        `;
-      }, 1200);
+          <div class="gallery">
+            <img src="foto1.jpg">
+            <img src="foto2.jpg">
+            <img src="foto3.jpg">
+          </div>
+
+          <iframe
+            style="border-radius:12px; margin-top:50px"
+            src="https://open.spotify.com/embed/playlist/XXXXXXXX"
+            width="100%"
+            height="380"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+
+          <div class="buttons" style="margin-top:50px;">
+            <button class="back" onclick="goBack()">Zurück</button>
+          </div>
+        </section>
+      `;
+    }, 1200);
+  }
+
+  function goBack() {
+    document.body.innerHTML = startHTML;
+    updateCountdown();
+  }
+
+  /* HERZREGEN */
+  function heartRain() {
+    const colors = ["#ff4d6d", "#ffffff"];
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+      heart.style.animationDuration = (2 + Math.random()) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 3000);
     }
-
-    function heartRain() {
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (2 + Math.random()) + "s";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 3000);
-      }
-    }
-  </script>
+  }
+</script>
 
 </body>
 </html>

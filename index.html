@@ -5,7 +5,6 @@
 <title>Volim te ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
 
 <style>
@@ -16,6 +15,12 @@ body {
   color: #333;
   text-align: center;
   overflow-x: hidden;
+  transition: 0.6s ease;
+}
+
+body.gray {
+  filter: grayscale(100%);
+  background: #cfcfcf;
 }
 
 section {
@@ -26,7 +31,6 @@ section {
 
 .hidden { display: none; }
 
-/* Schrift */
 .script {
   font-family: 'Great Vibes', cursive;
   font-size: 3.6rem;
@@ -46,7 +50,6 @@ section {
   margin-bottom: 60px;
 }
 
-/* Buttons */
 .buttons {
   display: flex;
   justify-content: center;
@@ -65,15 +68,9 @@ button {
 
 .yes { background:#ff4d6d; color:white; }
 .no { background:#ccc; }
-.back {
-  background: transparent;
-  border: 2px solid #333;
-}
+.back { background: transparent; border: 2px solid #333; }
 
-/* Countdown */
-.countdown-wrapper {
-  margin-top: 80px;
-}
+.countdown-wrapper { margin-top: 80px; }
 
 .countdown-text {
   font-family: 'Great Vibes', cursive;
@@ -84,12 +81,10 @@ button {
 #countdown {
   font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
-  letter-spacing: 1px;
 }
 
-/* Scroll-Bild */
 .scroll-image {
-  margin-top: 160px;
+  margin-top: 600px; /* ERZWINGT echtes Scrollen */
 }
 
 .scroll-image img {
@@ -99,7 +94,6 @@ button {
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* Galerie */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
@@ -116,9 +110,8 @@ button {
 .heart {
   position: fixed;
   top: -10px;
-  font-size: 20px;
-  animation: fall 3s linear forwards;
   pointer-events: none;
+  animation: fall linear forwards;
 }
 
 @keyframes fall {
@@ -129,9 +122,8 @@ button {
 
 <body>
 
-<!-- START -->
 <section id="startView">
-  <div class="script">Ich liebe dich mehr als gestern, aber weniger als morgen. </div>
+  <div class="script">Ich liebe dich mehr als gestern, aber weniger als morgen.</div>
 
   <div class="question">
     Lari, willst du mein Valentinstagsdate sein?
@@ -143,19 +135,15 @@ button {
   </div>
 
   <div class="countdown-wrapper">
-    <div class="countdown-text">
-      Unser nächster Jahrestag
-    </div>
-    <div id="countdown">Lädt…</div>
+    <div class="countdown-text">Unser nächster Jahrestag</div>
+    <div id="countdown"></div>
   </div>
 
-  <!-- FOTO 4 – NUR BEIM SCROLLEN SICHTBAR -->
   <div class="scroll-image">
-    <img src="foto4.jpg" alt="Ein besonderer Moment">
+    <img src="foto4.jpg">
   </div>
 </section>
 
-<!-- NEIN -->
 <section id="noView" class="hidden">
   <img src="nein.jpg" style="max-width:320px;border-radius:15px;">
   <div class="buttons">
@@ -163,16 +151,11 @@ button {
   </div>
 </section>
 
-<!-- JA -->
 <section id="yesView" class="hidden">
-  <div class="script">Za moju princezu. </div>
+  <div class="script">Za moju princezu.</div>
 
   <div class="romantic">
 HIER KOMMT DEIN LANGER TEXT.
-
-So, wie du sprichst.
-So, wie du fühlst.
-Ohne Kitsch.
   </div>
 
   <div class="gallery">
@@ -181,10 +164,9 @@ Ohne Kitsch.
     <img src="foto3.jpg">
   </div>
 
-  <!-- SPOTIFY -->
   <iframe
     style="border-radius:12px;margin-top:50px"
-    src="https://open.spotify.com/playlist/3By4rJlCXi8U4yWtDfYF07?si=d2294b4d7e1b45b0&pt=845062580a6f56245cf58cbf1f21873b"
+    src="https://open.spotify.com/embed/playlist/3By4rJlCXi8U4yWtDfYF07"
     width="100%"
     height="380"
     frameborder="0"
@@ -198,14 +180,13 @@ Ohne Kitsch.
 </section>
 
 <script>
-/* 🔁 JÄHRLICHER COUNTDOWN ZUM 23.06 */
+
+/* Countdown */
 function getNextAnniversary() {
   const now = new Date();
   let year = now.getFullYear();
   let target = new Date(year, 5, 23, 0, 0, 0);
-  if (now > target) {
-    target = new Date(year + 1, 5, 23, 0, 0, 0);
-  }
+  if (now > target) target = new Date(year + 1, 5, 23);
   return target;
 }
 
@@ -215,10 +196,10 @@ function updateCountdown() {
   let diff = target - now;
 
   const seconds = Math.floor(diff / 1000) % 60;
-  const minutes = Math.floor(diff / 1000 / 60) % 60;
-  const hours   = Math.floor(diff / 1000 / 60 / 60) % 24;
-  const days    = Math.floor(diff / 1000 / 60 / 60 / 24);
-  const months  = Math.floor(days / 30);
+  const minutes = Math.floor(diff / 60000) % 60;
+  const hours = Math.floor(diff / 3600000) % 24;
+  const days = Math.floor(diff / 86400000);
+  const months = Math.floor(days / 30);
   const remDays = days % 30;
 
   document.getElementById("countdown").innerHTML =
@@ -228,8 +209,9 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-/* VIEW-WECHSEL */
+/* Views */
 function showNo() {
+  document.body.classList.add("gray");
   document.getElementById("startView").classList.add("hidden");
   document.getElementById("noView").classList.remove("hidden");
 }
@@ -239,29 +221,32 @@ function showYes() {
   setTimeout(() => {
     document.getElementById("startView").classList.add("hidden");
     document.getElementById("yesView").classList.remove("hidden");
-  }, 800);
+  }, 1200);
 }
 
 function goBack() {
+  document.body.classList.remove("gray");
   document.getElementById("noView").classList.add("hidden");
   document.getElementById("yesView").classList.add("hidden");
   document.getElementById("startView").classList.remove("hidden");
 }
 
-/* ❤️ HERZREGEN */
+/* MASSIVER Herzregen */
 function heartRain() {
   const colors = ["#ff4d6d", "#ffffff"];
-  for (let i = 0; i < 35; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.color = colors[Math.floor(Math.random() * colors.length)];
-    h.style.animationDuration = (2 + Math.random()) + "s";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 3500);
+  for (let i = 0; i < 80; i++) {   // VIEL MEHR HERZEN
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random()*25) + "px";
+    heart.style.color = colors[Math.floor(Math.random()*2)];
+    heart.style.animationDuration = (3 + Math.random()*2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
   }
 }
+
 </script>
 
 </body>

@@ -42,14 +42,6 @@ section {
   margin-bottom: 35px;
 }
 
-.romantic {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  line-height: 1.8;
-  white-space: pre-line;
-  margin-bottom: 60px;
-}
-
 .buttons {
   display: flex;
   justify-content: center;
@@ -83,30 +75,34 @@ button {
   font-size: 1.4rem;
 }
 
+/* Seit-dann Anzeige */
+.since-wrapper {
+  margin-top: 50px;
+}
+
+#sinceStructured {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+#sinceAbsolute {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Scroll-Bild */
 .scroll-image {
-  margin-top: 600px; /* ERZWINGT echtes Scrollen */
+  margin-top: 600px;
 }
 
 .scroll-image img {
   width: 100%;
   max-width: 320px;
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 15px;
-  margin-top: 40px;
-}
-
-.gallery img {
-  width: 100%;
-  border-radius: 15px;
-}
-
-/* Herzen */
 .heart {
   position: fixed;
   top: -10px;
@@ -123,7 +119,7 @@ button {
 <body>
 
 <section id="startView">
-  <div class="script">Ich liebe dich mehr als gestern, aber weniger als morgen.</div>
+  <div class="script">Alles aus Liebe.</div>
 
   <div class="question">
     Lari, willst du mein Valentinstagsdate sein?
@@ -134,9 +130,17 @@ button {
     <button class="no" onclick="showNo()">Nein</button>
   </div>
 
+  <!-- Jährlicher Countdown -->
   <div class="countdown-wrapper">
     <div class="countdown-text">Unser nächster Jahrestag</div>
     <div id="countdown"></div>
+  </div>
+
+  <!-- Seit dem 23.06.2025 -->
+  <div class="since-wrapper">
+    <div class="countdown-text">Seit dem 23.06.2025 · 00:00</div>
+    <div id="sinceStructured"></div>
+    <div id="sinceAbsolute"></div>
   </div>
 
   <div class="scroll-image">
@@ -144,44 +148,9 @@ button {
   </div>
 </section>
 
-<section id="noView" class="hidden">
-  <img src="nein.jpg" style="max-width:320px;border-radius:15px;">
-  <div class="buttons">
-    <button class="back" onclick="goBack()">Zurück</button>
-  </div>
-</section>
-
-<section id="yesView" class="hidden">
-  <div class="script">Za moju princezu.</div>
-
-  <div class="romantic">
-HIER KOMMT DEIN LANGER TEXT.
-  </div>
-
-  <div class="gallery">
-    <img src="foto1.jpg">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
-  </div>
-
-  <iframe
-    style="border-radius:12px;margin-top:50px"
-    src="https://open.spotify.com/embed/playlist/3By4rJlCXi8U4yWtDfYF07"
-    width="100%"
-    height="380"
-    frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy">
-  </iframe>
-
-  <div class="buttons">
-    <button class="back" onclick="goBack()">Zurück</button>
-  </div>
-</section>
-
 <script>
 
-/* Countdown */
+/* ---------- JÄHRLICHER COUNTDOWN ---------- */
 function getNextAnniversary() {
   const now = new Date();
   let year = now.getFullYear();
@@ -209,32 +178,58 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
+/* ---------- SEIT 23.06.2025 ---------- */
+function updateSinceCounters() {
+
+  const startDate = new Date(2025, 5, 23, 0, 0, 0);
+  const now = new Date();
+  let diff = now - startDate;
+
+  if (diff < 0) {
+    document.getElementById("sinceStructured").innerHTML = "Noch nicht begonnen ❤️";
+    document.getElementById("sinceAbsolute").innerHTML = "";
+    return;
+  }
+
+  const totalSeconds = Math.floor(diff / 1000);
+  const totalMinutes = Math.floor(diff / 60000);
+  const totalHours   = Math.floor(diff / 3600000);
+  const totalDays    = Math.floor(diff / 86400000);
+  const totalWeeks   = Math.floor(totalDays / 7);
+  const totalMonths  = Math.floor(totalDays / 30);
+  const totalYears   = Math.floor(totalDays / 365);
+
+  /* Strukturierte Zeit */
+  const seconds = totalSeconds % 60;
+  const minutes = totalMinutes % 60;
+  const hours   = totalHours % 24;
+  const days    = totalDays % 30;
+  const months  = Math.floor((totalDays % 365) / 30);
+  const years   = totalYears;
+
+  document.getElementById("sinceStructured").innerHTML =
+    `${years} Jahre · ${months} Monate · ${days} Tage · ${hours} Std · ${minutes} Min · ${seconds} Sek`;
+
+  /* Absolute Einheiten */
+  document.getElementById("sinceAbsolute").innerHTML =
+    `${totalYears} Jahre · ${totalMonths} Monate · ${totalWeeks} Wochen · ${totalDays} Tage · ${totalMinutes} Minuten · ${totalSeconds} Sekunden`;
+}
+
+setInterval(updateSinceCounters, 1000);
+updateSinceCounters();
+
 /* Views */
 function showNo() {
   document.body.classList.add("gray");
-  document.getElementById("startView").classList.add("hidden");
-  document.getElementById("noView").classList.remove("hidden");
 }
 
 function showYes() {
   heartRain();
-  setTimeout(() => {
-    document.getElementById("startView").classList.add("hidden");
-    document.getElementById("yesView").classList.remove("hidden");
-  }, 1200);
 }
 
-function goBack() {
-  document.body.classList.remove("gray");
-  document.getElementById("noView").classList.add("hidden");
-  document.getElementById("yesView").classList.add("hidden");
-  document.getElementById("startView").classList.remove("hidden");
-}
-
-/* MASSIVER Herzregen */
 function heartRain() {
   const colors = ["#ff4d6d", "#ffffff"];
-  for (let i = 0; i < 80; i++) {   // VIEL MEHR HERZEN
+  for (let i = 0; i < 80; i++) {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";

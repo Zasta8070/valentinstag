@@ -38,7 +38,7 @@ section {
 
 .question {
   font-size: 2.2rem;
-  margin-bottom: 35px;
+  margin-bottom: 70px;   /* mehr Abstand */
 }
 
 .buttons {
@@ -60,23 +60,38 @@ button {
 .no { background:#ccc; }
 .back { background: transparent; border: 2px solid #333; }
 
-.countdown-text {
+/* Countdown Design */
+.countdown-block {
+  margin-top: 80px;
+}
+
+.countdown-title {
   font-family: 'Great Vibes', cursive;
-  font-size: 2.2rem;
-  margin-bottom: 15px;
-}
-
-#countdown {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-}
-
-#sinceAbsolute {
-  font-family: 'Playfair Display', serif;
   font-size: 2.3rem;
+  margin-bottom: 30px;
+}
+
+.counter-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  font-family: 'Playfair Display', serif;
+}
+
+.counter-box {
+  min-width: 100px;
+}
+
+.counter-number {
+  font-size: 2rem;
   font-weight: bold;
-  line-height: 1.8;
-  margin-top: 15px;
+}
+
+.counter-label {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 5px;
 }
 
 .scroll-image { margin-top: 600px; }
@@ -127,16 +142,25 @@ Lari, willst du mein Valentinstagsdate sein?
 <button class="no" onclick="showNo()">Nein</button>
 </div>
 
-<div class="countdown-text">Unser nächster Jahrestag</div>
-<div id="countdown"></div>
 
-<div class="countdown-text" style="margin-top:50px;">Seit dem 23.06.2025</div>
-
-<div style="font-family:'Great Vibes'; font-size:1.8rem; margin-top:15px;">
-Das sind:
+<!-- NÄCHSTER JAHRESTAG -->
+<div class="countdown-block">
+  <div class="countdown-title">Unser nächster Jahrestag</div>
+  <div id="nextAnniversary" class="counter-row"></div>
 </div>
 
-<div id="sinceAbsolute"></div>
+
+<!-- SEIT BEGINN -->
+<div class="countdown-block">
+  <div class="countdown-title">Seit dem 23.06.2025</div>
+
+  <div style="font-family:'Great Vibes'; font-size:1.8rem; margin-bottom:20px;">
+    Das sind:
+  </div>
+
+  <div id="sinceCounter" class="counter-row"></div>
+</div>
+
 
 <div class="scroll-image">
 <img src="foto4.jpg">
@@ -158,7 +182,12 @@ Das sind:
 <div class="script">An meine Princeza.</div>
 
 <div style="font-family:'Playfair Display'; margin-bottom:40px;">
-HIER KOMMT DEIN LANGER TEXT.
+Das ist eine sehr gute Wahl mein Babe!
+Dich lade ich hiermit zu einem Essen in der L'Osteria in der Innenstadt oder Vapiano ein.
+Im Nachgang geht es für uns Zwei zu einer tollen Aktivität, hierbei darfst du aus "Eislaufen", "Escape Room", "SeaLife" und "Planetarium" wählen.
+Die Musik für unsere tollen Autofahrten habe ich unten schon für uns rausgesucht :) 
+Egal welche Wünsche du für heute hast, ich möchte sie dir erfüllen. Auch wenn es der "Tag der Verliebten" ist, ist es auch dein Tag. Du gibst mir so oft ein so tolles Gefühl, sei es durch dein Lächeln, deine Küsse, deine Nähe oder einfach deine Anwesenheit. Das ist unbezahlbar. Also möchte ich dir heute zeigen, was meine Liebe zu dir bedeutet. 
+
 </div>
 
 <div class="gallery">
@@ -224,18 +253,17 @@ setTimeout(()=>h.remove(),5000);
 }
 
 
-/* COUNTDOWN NÄCHSTER JAHRESTAG */
-function getNextAnniversary(){
+/* FORMAT */
+function format(n){ return n.toLocaleString("de-DE"); }
+
+
+/* NÄCHSTER JAHRESTAG */
+function updateNext(){
 const now=new Date();
 let year=now.getFullYear();
 let target=new Date(year,5,23,0,0,0);
 if(now>target) target=new Date(year+1,5,23);
-return target;
-}
 
-function updateCountdown(){
-const now=new Date();
-const target=getNextAnniversary();
 let diff=target-now;
 
 let sec=Math.floor(diff/1000)%60;
@@ -243,23 +271,22 @@ let min=Math.floor(diff/60000)%60;
 let hrs=Math.floor(diff/3600000)%24;
 let days=Math.floor(diff/86400000);
 let months=Math.floor(days/30);
-let remDays=days%30;
 
-document.getElementById("countdown").innerHTML=
-months+" Monate<br>"+
-remDays+" Tage<br>"+
-hrs+" Stunden<br>"+
-min+" Minuten<br>"+
-sec+" Sekunden";
+document.getElementById("nextAnniversary").innerHTML=
+`
+<div class="counter-box"><div class="counter-number">${months}</div><div class="counter-label">Monate</div></div>
+<div class="counter-box"><div class="counter-number">${days%30}</div><div class="counter-label">Tage</div></div>
+<div class="counter-box"><div class="counter-number">${hrs}</div><div class="counter-label">Stunden</div></div>
+<div class="counter-box"><div class="counter-number">${min}</div><div class="counter-label">Minuten</div></div>
+<div class="counter-box"><div class="counter-number">${sec}</div><div class="counter-label">Sekunden</div></div>
+`;
 }
 
-setInterval(updateCountdown,1000);
-updateCountdown();
+setInterval(updateNext,1000);
+updateNext();
 
 
 /* SEIT 23.06.2025 */
-function format(n){ return n.toLocaleString("de-DE"); }
-
 function updateSince(){
 const start=new Date(2025,5,23,0,0,0);
 const now=new Date();
@@ -273,13 +300,15 @@ let weeks=Math.floor(days/7);
 let months=Math.floor(days/30);
 let years=Math.floor(days/365);
 
-document.getElementById("sinceAbsolute").innerHTML=
-format(years)+" Jahre<br>"+
-format(months)+" Monate<br>"+
-format(weeks)+" Wochen<br>"+
-format(days)+" Tage<br>"+
-format(min)+" Minuten<br>"+
-format(sec)+" Sekunden";
+document.getElementById("sinceCounter").innerHTML=
+`
+<div class="counter-box"><div class="counter-number">${format(years)}</div><div class="counter-label">Jahre</div></div>
+<div class="counter-box"><div class="counter-number">${format(months)}</div><div class="counter-label">Monate</div></div>
+<div class="counter-box"><div class="counter-number">${format(weeks)}</div><div class="counter-label">Wochen</div></div>
+<div class="counter-box"><div class="counter-number">${format(days)}</div><div class="counter-label">Tage</div></div>
+<div class="counter-box"><div class="counter-number">${format(min)}</div><div class="counter-label">Minuten</div></div>
+<div class="counter-box"><div class="counter-number">${format(sec)}</div><div class="counter-label">Sekunden</div></div>
+`;
 }
 
 setInterval(updateSince,1000);
@@ -289,3 +318,5 @@ updateSince();
 
 </body>
 </html>
+
+

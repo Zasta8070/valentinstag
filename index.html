@@ -12,7 +12,6 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(180deg, #ffd1d6, #ffe9ec);
-  color: #333;
   text-align: center;
   overflow-x: hidden;
 }
@@ -24,105 +23,109 @@ body.gray {
 
 section {
   padding: 80px 20px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
 }
 
-.hidden { display: none; }
+.hidden { display:none; }
 
 .script {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3.6rem;
-  margin-bottom: 25px;
+  font-family:'Great Vibes', cursive;
+  font-size:3.8rem;
+  margin-bottom:30px;
 }
 
 .question {
-  font-size: 2.2rem;
-  margin-bottom: 70px;   /* mehr Abstand */
+  font-size:2.2rem;
+  margin-bottom:80px;
 }
 
 .buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-bottom:60px;
 }
 
 button {
-  font-size: 1.1rem;
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
+  padding:12px 28px;
+  border-radius:30px;
+  border:none;
+  font-size:1.1rem;
+  cursor:pointer;
 }
 
 .yes { background:#ff4d6d; color:white; }
 .no { background:#ccc; }
-.back { background: transparent; border: 2px solid #333; }
+.back { background:transparent; border:2px solid #333; }
 
-/* Countdown Design */
 .countdown-block {
-  margin-top: 80px;
+  margin-top:90px;
 }
 
 .countdown-title {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2.3rem;
-  margin-bottom: 30px;
+  font-family:'Great Vibes', cursive;
+  font-size:2.4rem;
+  margin-bottom:35px;
 }
 
 .counter-row {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  font-family: 'Playfair Display', serif;
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+  font-family:'Playfair Display', serif;
 }
 
 .counter-box {
-  min-width: 100px;
+  min-width:110px;
 }
 
 .counter-number {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size:2rem;
+  font-weight:bold;
 }
 
 .counter-label {
-  font-size: 0.9rem;
-  opacity: 0.7;
-  margin-top: 5px;
+  font-size:0.9rem;
+  opacity:0.7;
+  margin-top:6px;
 }
 
-.scroll-image { margin-top: 600px; }
+#sinceAbsolute {
+  font-family:'Playfair Display', serif;
+  font-size:2.4rem;
+  line-height:1.8;
+  margin-top:30px;
+}
 
+.scroll-image { margin-top:600px; }
 .scroll-image img {
-  width: 100%;
-  max-width: 320px;
-  border-radius: 18px;
+  max-width:320px;
+  border-radius:18px;
 }
 
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 15px;
-  margin-top: 40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-top:40px;
 }
 
 .gallery img {
-  width: 100%;
-  border-radius: 15px;
+  width:100%;
+  border-radius:15px;
 }
 
 .heart {
-  position: fixed;
-  top: -10px;
-  animation: fall linear forwards;
-  pointer-events: none;
+  position:fixed;
+  top:-10px;
+  animation:fall linear forwards;
+  pointer-events:none;
 }
 
 @keyframes fall {
-  to { transform: translateY(110vh); opacity: 0; }
+  to { transform:translateY(110vh); opacity:0; }
 }
 </style>
 </head>
@@ -142,32 +145,29 @@ Lari, willst du mein Valentinstagsdate sein?
 <button class="no" onclick="showNo()">Nein</button>
 </div>
 
-
-<!-- NÄCHSTER JAHRESTAG -->
+<!-- Countdown 1 -->
 <div class="countdown-block">
-  <div class="countdown-title">Unser nächster Jahrestag</div>
-  <div id="nextAnniversary" class="counter-row"></div>
+<div class="countdown-title">Unser nächster Jahrestag</div>
+<div id="nextCounter" class="counter-row"></div>
 </div>
 
-
-<!-- SEIT BEGINN -->
+<!-- Countdown 2 + 3 -->
 <div class="countdown-block">
-  <div class="countdown-title">Seit dem 23.06.2025</div>
+<div class="countdown-title">Seit dem 23.06.2025</div>
+<div id="sinceStructured" class="counter-row"></div>
 
-  <div style="font-family:'Great Vibes'; font-size:1.8rem; margin-bottom:20px;">
-    Das sind:
-  </div>
-
-  <div id="sinceCounter" class="counter-row"></div>
+<div style="font-family:'Great Vibes'; font-size:1.8rem; margin-top:40px;">
+Das sind:
 </div>
 
+<div id="sinceAbsolute"></div>
+</div>
 
 <div class="scroll-image">
 <img src="foto4.jpg">
 </div>
 
 </section>
-
 
 <!-- NEIN -->
 <section id="noView" class="hidden">
@@ -176,18 +176,16 @@ Lari, willst du mein Valentinstagsdate sein?
 <button class="back" onclick="goBack()">Zurück</button>
 </section>
 
-
 <!-- JA -->
 <section id="yesView" class="hidden">
 <div class="script">An meine Princeza.</div>
 
-<div style="font-family:'Playfair Display'; margin-bottom:40px;">
-Das ist eine sehr gute Wahl mein Babe!
-Dich lade ich hiermit zu einem Essen in der L'Osteria in der Innenstadt oder Vapiano ein.
-Im Nachgang geht es für uns Zwei zu einer tollen Aktivität, hierbei darfst du aus "Eislaufen", "Escape Room", "SeaLife" und "Planetarium" wählen.
-Die Musik für unsere tollen Autofahrten habe ich unten schon für uns rausgesucht :) 
-Egal welche Wünsche du für heute hast, ich möchte sie dir erfüllen. Auch wenn es der "Tag der Verliebten" ist, ist es auch dein Tag. Du gibst mir so oft ein so tolles Gefühl, sei es durch dein Lächeln, deine Küsse, deine Nähe oder einfach deine Anwesenheit. Das ist unbezahlbar. Also möchte ich dir heute zeigen, was meine Liebe zu dir bedeutet. 
-
+<div style="font-family:'Playfair Display'; line-height:1.8; margin-bottom:40px;">
+<p>Das ist eine sehr gute Wahl mein Babe!</p>
+<p>Dich lade ich hiermit zu einem Essen in der L'Osteria in der Innenstadt oder Vapiano ein.</p>
+<p>Im Nachgang geht es für uns Zwei zu einer tollen Aktivität, hierbei darfst du aus "Eislaufen", "Escape Room", "SeaLife" und "Planetarium" wählen.</p>
+<p>Die Musik für unsere tollen Autofahrten habe ich unten schon für uns rausgesucht :) </p>
+<p> Egal welche Wünsche du für heute hast, ich möchte sie dir erfüllen. Auch wenn es der "Tag der Verliebten" ist, ist es auch dein Tag. Du gibst mir so oft ein so tolles Gefühl, sei es durch dein Lächeln, deine Küsse, deine Nähe oder einfach deine Anwesenheit. Das ist unbezahlbar. Also möchte ich dir heute zeigen, was meine Liebe zu dir bedeutet.</p>
 </div>
 
 <div class="gallery">
@@ -201,7 +199,6 @@ style="border-radius:12px;margin-top:50px"
 src="https://open.spotify.com/embed/playlist/3By4rJlCXi8U4yWtDfYF07"
 width="100%"
 height="380"
-frameborder="0"
 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
 loading="lazy">
 </iframe>
@@ -211,36 +208,34 @@ loading="lazy">
 
 </section>
 
-
 <script>
 
 /* VIEW */
-function showNo() {
+function showNo(){
 document.body.classList.add("gray");
-document.getElementById("startView").classList.add("hidden");
-document.getElementById("noView").classList.remove("hidden");
+startView.classList.add("hidden");
+noView.classList.remove("hidden");
 }
 
-function showYes() {
+function showYes(){
 heartRain();
-setTimeout(() => {
-document.getElementById("startView").classList.add("hidden");
-document.getElementById("yesView").classList.remove("hidden");
-}, 1000);
+setTimeout(()=>{
+startView.classList.add("hidden");
+yesView.classList.remove("hidden");
+},1000);
 }
 
-function goBack() {
+function goBack(){
 document.body.classList.remove("gray");
-document.getElementById("noView").classList.add("hidden");
-document.getElementById("yesView").classList.add("hidden");
-document.getElementById("startView").classList.remove("hidden");
+noView.classList.add("hidden");
+yesView.classList.add("hidden");
+startView.classList.remove("hidden");
 }
-
 
 /* HERZEN */
-function heartRain() {
-const hearts = ["❤️","🤍","💗","💖"];
-for (let i=0;i<80;i++){
+function heartRain(){
+const hearts=["❤️","🤍","💗","💖"];
+for(let i=0;i<80;i++){
 let h=document.createElement("div");
 h.className="heart";
 h.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
@@ -252,18 +247,15 @@ setTimeout(()=>h.remove(),5000);
 }
 }
 
-
 /* FORMAT */
 function format(n){ return n.toLocaleString("de-DE"); }
-
 
 /* NÄCHSTER JAHRESTAG */
 function updateNext(){
 const now=new Date();
 let year=now.getFullYear();
-let target=new Date(year,5,23,0,0,0);
+let target=new Date(year,5,23);
 if(now>target) target=new Date(year+1,5,23);
-
 let diff=target-now;
 
 let sec=Math.floor(diff/1000)%60;
@@ -272,8 +264,7 @@ let hrs=Math.floor(diff/3600000)%24;
 let days=Math.floor(diff/86400000);
 let months=Math.floor(days/30);
 
-document.getElementById("nextAnniversary").innerHTML=
-`
+nextCounter.innerHTML=`
 <div class="counter-box"><div class="counter-number">${months}</div><div class="counter-label">Monate</div></div>
 <div class="counter-box"><div class="counter-number">${days%30}</div><div class="counter-label">Tage</div></div>
 <div class="counter-box"><div class="counter-number">${hrs}</div><div class="counter-label">Stunden</div></div>
@@ -285,30 +276,42 @@ document.getElementById("nextAnniversary").innerHTML=
 setInterval(updateNext,1000);
 updateNext();
 
-
 /* SEIT 23.06.2025 */
 function updateSince(){
-const start=new Date(2025,5,23,0,0,0);
+const start=new Date(2025,5,23);
 const now=new Date();
 let diff=now-start;
 if(diff<0) return;
 
-let sec=Math.floor(diff/1000);
-let min=Math.floor(diff/60000);
-let days=Math.floor(diff/86400000);
-let weeks=Math.floor(days/7);
-let months=Math.floor(days/30);
-let years=Math.floor(days/365);
+let totalSec=Math.floor(diff/1000);
+let totalMin=Math.floor(diff/60000);
+let totalDays=Math.floor(diff/86400000);
+let weeks=Math.floor(totalDays/7);
+let months=Math.floor(totalDays/30);
+let years=Math.floor(totalDays/365);
 
-document.getElementById("sinceCounter").innerHTML=
-`
-<div class="counter-box"><div class="counter-number">${format(years)}</div><div class="counter-label">Jahre</div></div>
-<div class="counter-box"><div class="counter-number">${format(months)}</div><div class="counter-label">Monate</div></div>
-<div class="counter-box"><div class="counter-number">${format(weeks)}</div><div class="counter-label">Wochen</div></div>
-<div class="counter-box"><div class="counter-number">${format(days)}</div><div class="counter-label">Tage</div></div>
-<div class="counter-box"><div class="counter-number">${format(min)}</div><div class="counter-label">Minuten</div></div>
-<div class="counter-box"><div class="counter-number">${format(sec)}</div><div class="counter-label">Sekunden</div></div>
+let sec=totalSec%60;
+let min=totalMin%60;
+let hrs=Math.floor(diff/3600000)%24;
+let days=totalDays%30;
+
+sinceStructured.innerHTML=`
+<div class="counter-box"><div class="counter-number">${years}</div><div class="counter-label">Jahre</div></div>
+<div class="counter-box"><div class="counter-number">${months}</div><div class="counter-label">Monate</div></div>
+<div class="counter-box"><div class="counter-number">${weeks}</div><div class="counter-label">Wochen</div></div>
+<div class="counter-box"><div class="counter-number">${days}</div><div class="counter-label">Tage</div></div>
+<div class="counter-box"><div class="counter-number">${hrs}</div><div class="counter-label">Stunden</div></div>
+<div class="counter-box"><div class="counter-number">${min}</div><div class="counter-label">Minuten</div></div>
+<div class="counter-box"><div class="counter-number">${sec}</div><div class="counter-label">Sekunden</div></div>
 `;
+
+sinceAbsolute.innerHTML=
+format(years)+" Jahre<br>"+
+format(months)+" Monate<br>"+
+format(weeks)+" Wochen<br>"+
+format(totalDays)+" Tage<br>"+
+format(totalMin)+" Minuten<br>"+
+format(totalSec)+" Sekunden";
 }
 
 setInterval(updateSince,1000);
@@ -318,5 +321,3 @@ updateSince();
 
 </body>
 </html>
-
-
